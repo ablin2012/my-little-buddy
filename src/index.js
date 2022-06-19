@@ -9,33 +9,46 @@ document.addEventListener('DOMContentLoaded', function(event) {
     light,
     renderer,
     env,
+    piggy,
+    mousePos = {x: 0, y: 0},
+    xTarget,
+    yTarget,
     floor;
 
 
 
     function init(){
-        const canvas = document.querySelector('#bg');
-        const backgroundColor = "rgb(132, 219, 250)";
+        const buddy = document.querySelector('#buddy');
+        const backgroundColor = 0x81eefc;
 
         // create scene
         scene = new THREE.Scene();
         scene.background = new THREE.Color(backgroundColor);
         // scene.fog = new THREE.Fog(backgroundColor, 60, 100);
+        scene.fog = new THREE.Fog(0x81eefc, 350, 500);
 
         // create camera
-        camera = new THREE.PerspectiveCamera(60, window.innerWidth/ window.innerHeight, 0.1, 1000);
-        camera.position.x = -300;
-        camera.position.y = 300;
-        camera.position.z = 100;
+        camera = new THREE.PerspectiveCamera(30, window.innerWidth/ window.innerHeight, 1, 2000);
+        camera.position.x = 150;
+        camera.position.y = 100;
+        camera.position.z = 300;
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         // create renderer
-        renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, alpha: true});
+        renderer = new THREE.WebGLRenderer({canvas: buddy, antialias: true, alpha: true});
         renderer.shadowMap.enabled = true;
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(window.innerWidth/2, window.innerHeight/2);
         document.body.appendChild(renderer.domElement);
 
         // event listeners
+        window.addEventListener("resize", function(){
+            console.log('lol xd');
+        });
+        buddy.addEventListener("click", function(){
+            console.log('this will increase pet happiness')
+        })
+        document.addEventListener('mousemove', handleMouseMove, false);
     }
 
     function createLights() {
@@ -60,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         env = new THREE.Group();
     
         floor = new THREE.Mesh(new THREE.PlaneBufferGeometry(2000, 2000), new THREE.MeshBasicMaterial({
-        color: 0X652e37
+        color: 0x81eefc
         }));
         floor.rotation.x = -Math.PI / 2;
         floor.position.y = -36;
@@ -70,9 +83,14 @@ document.addEventListener('DOMContentLoaded', function(event) {
         scene.add(env);
     }
 
+    function handleMouseMove(event) {
+        mousePos = {x:event.clientX, y:event.clientY};
+    }
+
     // Refactor for other buddy types
     function createPiggy() {
-        let piggy = new Piggy('oinkers');
+        piggy = new Piggy('oinkers');
+        console.log(piggy);
         scene.add(piggy.threegroup);
     }
 
@@ -81,10 +99,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
 
     function animate(){
-        requestAnimationFrame( animate );
         render();
+        xTarget = (mousePos.x - window.innerWidth/2);
+        yTarget = (mousePos.y - window.innerHeight/2);
+        piggy.look(xTarget, yTarget);
+        requestAnimationFrame( animate );
     }
     
+
+
     init();
     createLights();
     createFloor();
