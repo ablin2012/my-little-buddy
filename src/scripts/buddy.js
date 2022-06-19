@@ -1,5 +1,3 @@
-import { BuddyUtil } from "./buddy_util";
-
 export class Buddy {
     constructor(name){
         this.name = name;

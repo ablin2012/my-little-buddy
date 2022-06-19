@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+
 export const BuddyUtil = {
     makeCube: (material, width, height, depth, posX, posY, posZ, rotX, rotY, rotZ) => {
         let geom = new THREE.BoxGeometry(width, height, depth);

@@ -1,4 +1,5 @@
 // FOR REFERENCE ONLY, TO BE DELETED AFTER MODEL COMPLETION
+import * as THREE from 'three';
 
 Dragon = function() {
     this.tailAmplitude = 3;
