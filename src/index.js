@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     let expBar = document.getElementById('exp-bar').firstElementChild;
     let hungerBar = document.getElementById('hunger-bar').firstElementChild;
-    let happinessBar =document.getElementById('happiness-bar').firstElementChild;
+    let happinessBar = document.getElementById('happiness-bar').firstElementChild;
+    let buddyLevel = document.getElementById('level');
 
 
     function init(){
@@ -112,20 +113,28 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
     
     function updateProgressBars(){
-        console.log(piggy.hungerLevel);
-        console.log(piggy.happyLevel);
+        // console.log(piggy.hungerLevel);
+        // console.log(piggy.happyLevel);
+        console.log(piggy.exp);
         hungerBar.style.width = `${piggy.hungerLevel}%` ;
         happinessBar.style.width = `${piggy.happyLevel}%`;
         expBar.style.width = `${piggy.exp}%`;
+        buddyLevel.innerHTML = `Lv. ${piggy.level}`;
     }
 
     function updateBuddyInfo(buddy){
         setInterval(() => {
             // buddy.hungerDrain();
             buddy.happyDrain();
+            buddy.passiveExpGain();
             updateProgressBars();
         }, 5000)
     }
+
+    function spawnFood(){
+
+    }
+
     init();
     createLights();
     createFloor();

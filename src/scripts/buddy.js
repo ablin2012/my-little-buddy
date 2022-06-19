@@ -14,8 +14,8 @@ export class Buddy {
         }
         if (this.exp > 100) {
             this.exp = 100;
+            this.levelUp();
         }
-
     }
 
     hungerGain(points){
@@ -36,21 +36,34 @@ export class Buddy {
         }
     }
 
+    passiveExpGain(){
+        if (this.exp < 100) {
+            this.exp += 20/this.level;
+        } else if (this.happyLevel > 100 || this.happyLevel + 20/this.level > 100) {
+            this.exp = 100;
+        }
+        this.levelUp();
+    }
+
     hungerDrain(){
-        if (this.hungerLevel > 1) {
+        if (this.hungerLevel > 0) {
             this.hungerLevel -= 1;
+        } else {
+            this.hungerLevel = 0;
         }
     }
 
     happyDrain(){
-        if (this.happyLevel > 2) {
+        if (this.happyLevel > 0) {
             this.happyLevel -= 2;
+        } else {
+            this.happyLevel = 0;
         }
     }
 
     // level-up logic
     levelUp(){
-        if (this.exp === 100) {
+        if (this.exp >= 100) {
             this.level += 1;
             this.exp = 0;
         }
