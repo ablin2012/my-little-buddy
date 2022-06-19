@@ -15,9 +15,13 @@ document.addEventListener('DOMContentLoaded', function(event) {
     yTarget,
     floor;
 
+    let expBar = document.getElementById('exp-bar').firstElementChild;
+    let hungerBar = document.getElementById('hunger-bar').firstElementChild;
+    let happinessBar =document.getElementById('happiness-bar').firstElementChild;
 
 
     function init(){
+        console.log(expBar);
         const buddy = document.querySelector('#buddy');
         const backgroundColor = 0x81eefc;
 
@@ -46,7 +50,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
             console.log('lol xd');
         });
         buddy.addEventListener("click", function(){
-            console.log('this will increase pet happiness')
+            piggy.happyGain(5);
+            updateProgressBars();
         })
         document.addEventListener('mousemove', handleMouseMove, false);
     }
@@ -106,12 +111,27 @@ document.addEventListener('DOMContentLoaded', function(event) {
         requestAnimationFrame( animate );
     }
     
+    function updateProgressBars(){
+        console.log(piggy.hungerLevel);
+        console.log(piggy.happyLevel);
+        hungerBar.style.width = `${piggy.hungerLevel}%` ;
+        happinessBar.style.width = `${piggy.happyLevel}%`;
+        expBar.style.width = `${piggy.exp}%`;
+    }
 
-
+    function updateBuddyInfo(buddy){
+        setInterval(() => {
+            // buddy.hungerDrain();
+            buddy.happyDrain();
+            updateProgressBars();
+        }, 5000)
+    }
     init();
     createLights();
     createFloor();
     createPiggy();
+    updateProgressBars();
+    updateBuddyInfo(piggy);
     animate();
 
 });

@@ -9,27 +9,43 @@ export class Buddy {
 
     // functions to alter progress bars
     expGain(points){
-        this.exp += points;
+        if (this.exp < 100) {
+            this.exp += points;
+        }
+        if (this.exp > 100) {
+            this.exp = 100;
+        }
+
     }
 
     hungerGain(points){
-        this.hungerLevel += points;
+        if (this.hungerLevel < 100) {
+            this.hungerLevel += points;
+        }
+        if (this.hungerLevel > 100) {
+            this.hungerLevel = 100;
+        }
     }
 
     happyGain(points){
-        this.happyLevel += points;
+        if (this.happyLevel < 100) {
+            this.happyLevel += points;
+        }
+        if (this.happyLevel > 100) {
+            this.happyLevel = 100;
+        }
     }
 
     hungerDrain(){
-        setInterval(() =>{
-            this.hungerLevel -= 2;
-        }, 5000);
+        if (this.hungerLevel > 1) {
+            this.hungerLevel -= 1;
+        }
     }
 
     happyDrain(){
-        setInterval(() =>{
-            this.happyLevel -= 5;
-        }, 5000);
+        if (this.happyLevel > 2) {
+            this.happyLevel -= 2;
+        }
     }
 
     // level-up logic

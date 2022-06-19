@@ -11,7 +11,7 @@ export class Piggy extends Buddy {
         // Materials
         let pinkMat = new THREE.MeshLambertMaterial({
             color: 0xffb6c1,
-            shading: THREE.FlatShading
+            // shading: THREE.FlatShading
         })
 
         // body
