@@ -30,6 +30,7 @@ In addition, this project will include:
 ### Technologies and APIs
 * Three.js for creating pet model
 * Sprites for food and minigames
+* Google Fonts
 * Webpack
 * npm
 

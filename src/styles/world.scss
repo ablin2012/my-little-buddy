@@ -1,0 +1,32 @@
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#world {
+    background: lightblue;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+#instructions {
+    position: absolute;
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: 12px;
+    width: 100%;
+    display: flex;
+    bottom: 6%;
+    justify-content: center;
+}
+
+.personal-link {
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    bottom: 20%;
+}

@@ -1,4 +1,134 @@
 /*!*************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
   \*************************************************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=Play&family=Rubik+Mono+One&display=swap);
+/*!****************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styles/reset.css ***!
+  \****************************************************************************************************/
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+/*!*****************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss (1) ***!
+  \*****************************************************************************************************************************************/
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
 
+#world {
+  background: lightblue;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#instructions {
+  position: absolute;
+  font-family: "Rubik Mono One", sans-serif;
+  font-size: 12px;
+  width: 100%;
+  display: flex;
+  bottom: 6%;
+  justify-content: center;
+}
+
+.personal-link {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  bottom: 20%;
+}
+
+#buddy-name {
+  font-family: "Rubik Mono One", sans-serif;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  top: 10%;
+  font-size: 20px;
+}
+
+#level {
+  font-family: "Play", sans-serif;
+  color: gray;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  top: 13%;
+}
+
+#exp-bar {
+  position: absolute;
+  display: flex;
+  margin-left: 35%;
+  width: 30%;
+  top: 16%;
+}
+
+#hunger-bar {
+  position: absolute;
+  display: flex;
+  margin-left: 35%;
+  width: 24%;
+  top: 20%;
+  height: 10px;
+}
+
+#happiness-bar {
+  position: absolute;
+  display: flex;
+  margin-left: 35%;
+  width: 20%;
+  top: 22%;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 20px;
+  position: relative;
+  background: #555;
+  border-radius: 25px;
+  padding: 0px;
+  box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.progress-bar > span {
+  display: flex;
+  justify-content: flex-start;
+  height: 100%;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: rgb(43, 194, 83);
+  background-image: linear-gradient(center bottom, rgb(43, 194, 83) 37%, rgb(84, 240, 84) 69%);
+  box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+#happiness-bar > span {
+  background-color: #f1ec65;
+  background-image: linear-gradient(to bottom, #e6f287, #f1ec65);
+}
+
+#hunger-bar > span {
+  background-color: #f96060;
+  background-image: linear-gradient(to bottom, #f0a3a3, #f96060);
+}
+
+#food {
+  position: absolute;
+  bottom: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
