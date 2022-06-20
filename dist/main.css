@@ -12,11 +12,17 @@ ul {
 /*!*****************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss (1) ***!
   \*****************************************************************************************************************************************/
-canvas {
+#world {
   position: fixed;
   top: 0;
   left: 0;
   z-index: -1;
+}
+
+#two-plain {
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 #instructions {
@@ -29,11 +35,11 @@ canvas {
   justify-content: center;
 }
 
-.personal-link {
+#my-links {
   position: absolute;
   display: flex;
   justify-content: flex-end;
-  width: 100%;
+  flex-direction: column;
   bottom: 20%;
 }
 

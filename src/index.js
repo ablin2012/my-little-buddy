@@ -18,10 +18,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     // DOM elements
     const canvas = document.querySelector('#world');
+    const canvas2D = document.querySelector('#two-plain');
     let expBar = document.getElementById('exp-bar').firstElementChild;
     let hungerBar = document.getElementById('hunger-bar').firstElementChild;
     let happinessBar = document.getElementById('happiness-bar').firstElementChild;
     let buddyLevel = document.getElementById('level');
+
 
     function init(){
         console.log(expBar);
@@ -48,10 +50,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
         document.body.appendChild(renderer.domElement);
 
         // event listeners
-        window.addEventListener("resize", function(){
-            console.log('lol xd');
-        });
-        canvas.addEventListener("click", function(){
+        window.addEventListener("resize", onWindowResize, false);
+        canvas2D.addEventListener("click", function(){
             piggy.happyGain(5);
             updateProgressBars();
         })
@@ -90,8 +90,10 @@ document.addEventListener('DOMContentLoaded', function(event) {
         scene.add(env);
     }
 
-    function handleMouseMove(event) {
-        mousePos = {x:event.clientX, y:event.clientY};
+    function onWindowResize() {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
     }
 
     // Refactor for other buddy types
@@ -100,7 +102,10 @@ document.addEventListener('DOMContentLoaded', function(event) {
         console.log(piggy);
         scene.add(piggy.threegroup);
     }
-
+    
+    function handleMouseMove(event) {
+        mousePos = {x:event.clientX, y:event.clientY};
+    }
     function render(){
         renderer.render(scene, camera);
     }
@@ -116,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     function updateProgressBars(){
         // console.log(piggy.hungerLevel);
         // console.log(piggy.happyLevel);
-        console.log(piggy.exp);
+        // console.log(piggy.exp);
         hungerBar.style.width = `${piggy.hungerLevel}%` ;
         happinessBar.style.width = `${piggy.happyLevel}%`;
         expBar.style.width = `${piggy.exp}%`;
@@ -133,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
 
     function spawnFood(){
-        let context = canvas.getContext('2d');
+        let context = canvas2D.getContext('2d');
         BuddyUtil.makeBase('./src/assets/images/apple.png', context, 0, 5);
         BuddyUtil.makeBase('./src/assets/images/eggplant.png', context, 50, 5);
         BuddyUtil.makeBase('./src/assets/images/pizza.png', context, 100, 5);
@@ -146,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     createFloor();
     createPiggy();
     updateProgressBars();
-    // spawnFood();
+    spawnFood();
     updateBuddyInfo(piggy);
     animate();
 

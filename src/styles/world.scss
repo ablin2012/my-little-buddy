@@ -1,4 +1,4 @@
-canvas {
+#world {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,6 +10,11 @@ canvas {
     // align-items: center;
 }
 
+#two-plain {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
 // #world {
 //     background: #81eefc;
 //     position: absolute;
@@ -29,10 +34,10 @@ canvas {
     justify-content: center;
 }
 
-.personal-link {
+#my-links {
     position: absolute;
     display: flex;
     justify-content: flex-end;
-    width: 100%;
+    flex-direction: column;
     bottom: 20%;
 }

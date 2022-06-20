@@ -24,6 +24,7 @@ export const BuddyUtil = {
 
     makeBase: (imgPath, context, posX, posY) => {
         let base_image = new Image();
+        console.log(context);
         base_image.src = imgPath;
         base_image.onload = function(){
             context.drawImage(base_image, posX, posY);
