@@ -15,10 +15,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
     yTarget,
     floor;
 
+    // DOM elements
     let expBar = document.getElementById('exp-bar').firstElementChild;
     let hungerBar = document.getElementById('hunger-bar').firstElementChild;
     let happinessBar = document.getElementById('happiness-bar').firstElementChild;
     let buddyLevel = document.getElementById('level');
+    let foodHotbad = document.getElementById('food-hotbar');
 
 
     function init(){
@@ -132,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
 
     function spawnFood(){
-
+        
     }
 
     init();
