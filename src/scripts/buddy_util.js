@@ -20,5 +20,13 @@ export const BuddyUtil = {
         let dt = tmax-tmin;
         let tv = tmin + (pc*dt);
         return tv; 
+    },
+
+    makeBase: (imgPath, context, posX, posY) => {
+        let base_image = new Image();
+        base_image.src = imgPath;
+        base_image.onload = function(){
+            context.drawImage(base_image, posX, posY);
+        }
     }
 }

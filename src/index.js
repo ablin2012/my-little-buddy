@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { BuddyUtil } from './scripts/buddy_util';
 import {Piggy} from './scripts/piggy';
 
 document.addEventListener('DOMContentLoaded', function(event) {
@@ -16,16 +17,14 @@ document.addEventListener('DOMContentLoaded', function(event) {
     floor;
 
     // DOM elements
+    const canvas = document.querySelector('#world');
     let expBar = document.getElementById('exp-bar').firstElementChild;
     let hungerBar = document.getElementById('hunger-bar').firstElementChild;
     let happinessBar = document.getElementById('happiness-bar').firstElementChild;
     let buddyLevel = document.getElementById('level');
-    let foodHotbad = document.getElementById('food-hotbar');
-
 
     function init(){
         console.log(expBar);
-        const buddy = document.querySelector('#buddy');
         const backgroundColor = 0x81eefc;
 
         // create scene
@@ -35,24 +34,24 @@ document.addEventListener('DOMContentLoaded', function(event) {
         scene.fog = new THREE.Fog(0x81eefc, 350, 500);
 
         // create camera
-        camera = new THREE.PerspectiveCamera(30, window.innerWidth/ window.innerHeight, 1, 2000);
+        camera = new THREE.PerspectiveCamera(50, window.innerWidth/ window.innerHeight, 1, 2000);
         camera.position.x = 150;
         camera.position.y = 100;
         camera.position.z = 300;
         camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         // create renderer
-        renderer = new THREE.WebGLRenderer({canvas: buddy, antialias: true, alpha: true});
+        renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, alpha: true});
         renderer.shadowMap.enabled = true;
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth/2, window.innerHeight/2);
+        renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
         // event listeners
         window.addEventListener("resize", function(){
             console.log('lol xd');
         });
-        buddy.addEventListener("click", function(){
+        canvas.addEventListener("click", function(){
             piggy.happyGain(5);
             updateProgressBars();
         })
@@ -81,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         env = new THREE.Group();
     
         floor = new THREE.Mesh(new THREE.PlaneBufferGeometry(2000, 2000), new THREE.MeshBasicMaterial({
-        color: 0x81eefc
+        color: 0x28871e
         }));
         floor.rotation.x = -Math.PI / 2;
         floor.position.y = -36;
@@ -134,7 +133,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
 
     function spawnFood(){
-        
+        let context = canvas.getContext('2d');
+        BuddyUtil.makeBase('./src/assets/images/apple.png', context, 0, 5);
+        BuddyUtil.makeBase('./src/assets/images/eggplant.png', context, 50, 5);
+        BuddyUtil.makeBase('./src/assets/images/pizza.png', context, 100, 5);
+        BuddyUtil.makeBase('./src/assets/images/sushi.png', context, 150, 5);
+        BuddyUtil.makeBase('./src/assets/images/milk.png', context, 200, 5);
     }
 
     init();
@@ -142,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     createFloor();
     createPiggy();
     updateProgressBars();
+    // spawnFood();
     updateBuddyInfo(piggy);
     animate();
 
