@@ -22,12 +22,13 @@ export const BuddyUtil = {
         return tv; 
     },
 
-    makeBase: (imgPath, context, posX, posY) => {
-        let base_image = new Image();
-        console.log(context);
-        base_image.src = imgPath;
-        base_image.onload = function(){
-            context.drawImage(base_image, posX, posY);
-        }
-    }
+    // getFoodStartPos: (width, height) => {
+    //     let mid = [width/2, height * 0.8]
+    //     let allPos = [mid];
+    //     for (let i = 0; i < 2; i++) {
+    //         allPos.push([mid[0] - i * width/4, mid[1]])
+    //         allPos.push([mid[0] - i * width/4, mid[1]])
+    //     }
+    //     return allPos;
+    // }
 }

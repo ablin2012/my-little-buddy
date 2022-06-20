@@ -1,8 +1,17 @@
 import * as THREE from 'three';
+import { Apple } from './scripts/apple';
+import { Sushi } from './scripts/sushi';
+import { Pizza } from './scripts/pizza';
+import { Milk } from './scripts/milk';
+import { Carrot } from './scripts/carrot';
 import { BuddyUtil } from './scripts/buddy_util';
 import {Piggy} from './scripts/piggy';
 
 document.addEventListener('DOMContentLoaded', function(event) {
+    const CONSTANTS = {
+        NUM_FOODS: 5
+    }
+
     let scene,
     camera,
     shadowLight,
@@ -14,7 +23,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
     mousePos = {x: 0, y: 0},
     xTarget,
     yTarget,
-    floor;
+    floor,
+    foods = [];
+
+    // draggable vars
+    let mouseX,
+    mouseY,
+    lastX,
+    lastY,
+    mouseIsDown = false;
 
     // DOM elements
     const canvas = document.querySelector('#world');
@@ -25,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
     let buddyLevel = document.getElementById('level');
 
 
+
     function init(){
-        console.log(expBar);
         const backgroundColor = 0x81eefc;
 
         // create scene
@@ -99,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
     // Refactor for other buddy types
     function createPiggy() {
         piggy = new Piggy('oinkers');
-        console.log(piggy);
         scene.add(piggy.threegroup);
     }
     
@@ -138,20 +154,84 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
 
     function spawnFood(){
-        let context = canvas2D.getContext('2d');
-        BuddyUtil.makeBase('./src/assets/images/apple.png', context, 0, 5);
-        BuddyUtil.makeBase('./src/assets/images/eggplant.png', context, 50, 5);
-        BuddyUtil.makeBase('./src/assets/images/pizza.png', context, 100, 5);
-        BuddyUtil.makeBase('./src/assets/images/sushi.png', context, 150, 5);
-        BuddyUtil.makeBase('./src/assets/images/milk.png', context, 200, 5);
+        foods.push(new Apple());
+        foods.push(new Sushi());
+        foods.push(new Pizza());
+        foods.push(new Carrot());
+        foods.push(new Milk());
     }
 
+    function drawFoods(){
+        let context = canvas2D.getContext('2d');
+        foods.forEach((el) => {
+            el.draw(context);
+        })
+    }
+
+    function handleMouseDown(e){
+
+        // get the current mouse position relative to the canvas
+      
+        mouseX = parseInt(e.clientX-offsetX);
+        mouseY = parseInt(e.clientY-offsetY);
+      
+        // save this last mouseX/mouseY
+      
+        lastX = mouseX;
+        lastY = mouseY;
+      
+        // set the mouseIsDown flag
+      
+        mouseIsDown = true;
+    }
+
+    function handleMouseUp(e){
+
+        // clear the mouseIsDown flag
+      
+        mouseIsDown=false;
+    }
+      
+    function handleMouseMove2D(e){
+        // if the mouseIsDown flag isn't set, no work to do
+      
+        if(!mouseIsDown){return;}
+        // get mouseX/mouseY
+      
+        mouseX = parseInt(e.clientX-offsetX);
+        mouseY = parseInt(e.clientY-offsetY);
+      
+        // for each food in the foods array
+        // use context.isPointInPath to test if it’s being dragged
+      
+        for(let i = 0; i < foods.length; i++){
+            let food = foods[i];
+            food.draw(context);
+            if(context.isPointInPath(lastX,lastY)){ 
+      
+                // if this food’s being dragged, 
+                // move it by the change in mouse position from lastXY to currentXY
+      
+                food.posX += (mouseX-lastX);
+                food.posY += (mouseY-lastY);
+                food.right = food.posX + food.width;
+                food.bottom = food.posY + food.height;
+            }
+        }
+      
+        // update the lastXY to the current mouse position
+        lastX = mouseX;
+        lastY = mouseY;
+          // draw all foods in their new positions
+        drawFoods();
+    }
     init();
     createLights();
     createFloor();
     createPiggy();
     updateProgressBars();
     spawnFood();
+    drawFoods();
     updateBuddyInfo(piggy);
     animate();
 
