@@ -5,11 +5,16 @@ import { Pizza } from './scripts/pizza';
 import { Milk } from './scripts/milk';
 import { Carrot } from './scripts/carrot';
 import { BuddyUtil } from './scripts/buddy_util';
+import { collisionUtils } from './scripts/collision_utils';
 import {Piggy} from './scripts/piggy';
 
 document.addEventListener('DOMContentLoaded', function(event) {
     const CONSTANTS = {
-        NUM_FOODS: 5
+        NUM_FOODS: window.innerHeight/2 + 100,
+        PIG_TOP: window.innerWidth/2 - 100, 
+        PIG_BOT: window.innerHeight/2 - 100,
+        PIG_LEFT: window.innerWidth/2 - 100,
+        PIG_RIGHT: window.innerWidth/2 + 100,
     }
 
     let scene,
@@ -24,14 +29,21 @@ document.addEventListener('DOMContentLoaded', function(event) {
     xTarget,
     yTarget,
     floor,
-    foods = [];
+    foods = [],
+    height = window.innerHeight,
+    width = window.innerWidth,
+    feedBox;
 
     // draggable vars
     let mouseX,
     mouseY,
     lastX,
     lastY,
-    mouseIsDown = false;
+    mouseIsDown = false,
+    offsetX = 0,
+    offsetY = 0,
+    offset = {},
+    selected = null;
 
     // DOM elements
     const canvas = document.querySelector('#world');
@@ -44,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
 
     function init(){
+        console.log(window.innerHeight);
+        console.log(window.innerWidth);
         const backgroundColor = 0x81eefc;
 
         // create scene
@@ -53,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         scene.fog = new THREE.Fog(0x81eefc, 350, 500);
 
         // create camera
-        camera = new THREE.PerspectiveCamera(50, window.innerWidth/ window.innerHeight, 1, 2000);
+        camera = new THREE.PerspectiveCamera(50, width/ height, 1, 2000);
         camera.position.x = 150;
         camera.position.y = 100;
         camera.position.z = 300;
@@ -63,16 +77,13 @@ document.addEventListener('DOMContentLoaded', function(event) {
         renderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, alpha: true});
         renderer.shadowMap.enabled = true;
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(width, height);
         document.body.appendChild(renderer.domElement);
 
         // event listeners
         window.addEventListener("resize", onWindowResize, false);
-        canvas2D.addEventListener("click", function(){
-            piggy.happyGain(5);
-            updateProgressBars();
-        })
-        document.addEventListener('mousemove', handleMouseMove, false);
+        canvas2D.addEventListener("mousedown", handleMouseDown, false);
+        document.addEventListener("mousemove", handleMouseMove, false);
     }
 
     function createLights() {
@@ -135,9 +146,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
     
     function updateProgressBars(){
-        // console.log(piggy.hungerLevel);
-        // console.log(piggy.happyLevel);
-        // console.log(piggy.exp);
         hungerBar.style.width = `${piggy.hungerLevel}%` ;
         happinessBar.style.width = `${piggy.happyLevel}%`;
         expBar.style.width = `${piggy.exp}%`;
@@ -146,83 +154,81 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     function updateBuddyInfo(buddy){
         setInterval(() => {
-            // buddy.hungerDrain();
+            buddy.hungerDrain();
             buddy.happyDrain();
             buddy.passiveExpGain();
+            buddy.isBuddyDead();
             updateProgressBars();
-        }, 5000)
+        }, 200)
+        setInterval(() => {
+            drawFoods();
+        }, 2000)
     }
 
     function spawnFood(){
-        foods.push(new Apple());
-        foods.push(new Sushi());
-        foods.push(new Pizza());
-        foods.push(new Carrot());
-        foods.push(new Milk());
+        foods = [];
+        foods.push(new Apple(window));
+        foods.push(new Sushi(window));
+        foods.push(new Pizza(window));
+        foods.push(new Carrot(window));
+        foods.push(new Milk(window));
     }
 
     function drawFoods(){
         let context = canvas2D.getContext('2d');
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
         foods.forEach((el) => {
             el.draw(context);
         })
     }
 
+    function drawFood(food){
+        let context = canvas2D.getContext('2d');
+        context.clearRect(food.x, food.y, food.width, food.height);
+        food.draw(context);
+    }
+
     function handleMouseDown(e){
-
-        // get the current mouse position relative to the canvas
-      
-        mouseX = parseInt(e.clientX-offsetX);
-        mouseY = parseInt(e.clientY-offsetY);
-      
-        // save this last mouseX/mouseY
-      
-        lastX = mouseX;
-        lastY = mouseY;
-      
-        // set the mouseIsDown flag
-      
-        mouseIsDown = true;
-    }
-
-    function handleMouseUp(e){
-
-        // clear the mouseIsDown flag
-      
-        mouseIsDown=false;
-    }
-      
-    function handleMouseMove2D(e){
-        // if the mouseIsDown flag isn't set, no work to do
-      
-        if(!mouseIsDown){return;}
-        // get mouseX/mouseY
-      
-        mouseX = parseInt(e.clientX-offsetX);
-        mouseY = parseInt(e.clientY-offsetY);
-      
-        // for each food in the foods array
-        // use context.isPointInPath to test if it’s being dragged
-      
-        for(let i = 0; i < foods.length; i++){
-            let food = foods[i];
-            food.draw(context);
-            if(context.isPointInPath(lastX,lastY)){ 
-      
-                // if this food’s being dragged, 
-                // move it by the change in mouse position from lastXY to currentXY
-      
-                food.posX += (mouseX-lastX);
-                food.posY += (mouseY-lastY);
-                food.right = food.posX + food.width;
-                food.bottom = food.posY + food.height;
+        for(let i = 0; i < foods.length; i++) {
+            if (collisionUtils.pointInRect(e.clientX, e.clientY, foods[i])) {
+                selected = foods[i];
+                document.body.addEventListener("mousemove", onMouseMove);
+                document.body.addEventListener("mouseup", onMouseUp);
+                offset.x = e.clientX - selected.x;
+                offset.y = e.clientY - selected.y;
             }
         }
-      
-        // update the lastXY to the current mouse position
-        lastX = mouseX;
-        lastY = mouseY;
-          // draw all foods in their new positions
+        document.body.addEventListener("mousemove", petBuddy);
+        document.body.addEventListener("mouseup", removePetBuddy);
+    }
+
+    function petBuddy(e) {
+        if (mousePos.x > CONSTANTS.PIG_LEFT && mousePos.x < CONSTANTS.PIG_RIGHT && mousePos.y > CONSTANTS.PIG_BOT && mousePos.y < CONSTANTS.PIG_TOP && !selected) {
+            piggy.happyGain(0.1);
+            updateProgressBars();
+        }
+    }
+
+    function removePetBuddy(e) {
+        document.body.removeEventListener("mousemove", petBuddy);
+        document.body.removeEventListener("mouseup", removePetBuddy);
+    }
+    function onMouseMove(e){
+        drawFood(selected);
+        selected.x = e.clientX - offset.x;
+        selected.y = e.clientY - offset.y;
+    }
+
+    function onMouseUp(e){
+        document.body.removeEventListener("mousemove", onMouseMove);
+        document.body.removeEventListener("mouseup", onMouseUp);
+        if (selected.x > CONSTANTS.PIG_LEFT && selected.x < CONSTANTS.PIG_RIGHT && selected.y > CONSTANTS.PIG_BOT && selected.y < CONSTANTS.PIG_TOP) {
+            console.log('yo eat that shit');
+            piggy.hungerGain(selected.nutritionValue);
+            updateProgressBars();
+            spawnFood();
+        }
+        selected = null;
         drawFoods();
     }
     init();
@@ -232,6 +238,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     updateProgressBars();
     spawnFood();
     drawFoods();
+    // createFoodBox();
     updateBuddyInfo(piggy);
     animate();
 
