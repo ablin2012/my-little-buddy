@@ -20,15 +20,5 @@ export const BuddyUtil = {
         let dt = tmax-tmin;
         let tv = tmin + (pc*dt);
         return tv; 
-    },
-
-    // getFoodStartPos: (width, height) => {
-    //     let mid = [width/2, height * 0.8]
-    //     let allPos = [mid];
-    //     for (let i = 0; i < 2; i++) {
-    //         allPos.push([mid[0] - i * width/4, mid[1]])
-    //         allPos.push([mid[0] - i * width/4, mid[1]])
-    //     }
-    //     return allPos;
-    // }
+    }
 }
