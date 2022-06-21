@@ -51,13 +51,13 @@ export class Piggy extends Buddy {
         this.head.add(this.noseHoleR);
 
         // legs
-        this.legFL = BuddyUtil.makeCube(pinkMat, 16, 20, 16, 15, -30, 22, 0, 0, 0);
+        this.legFL = BuddyUtil.makeCube(pinkMat, 16, 20, 16, 14.5, -30, 22, 0, 0, 0);
         this.legFR = this.legFL.clone();
-        this.legFR.position.x = -15;
+        this.legFR.position.x = -14.5;
         this.legBL = this.legFL.clone();
         this.legBL.position.z = -22;
         this.legBR = this.legBL.clone();
-        this.legBR.position.x = -15;
+        this.legBR.position.x = -14.5;
 
         this.threegroup.add(this.body);
         this.threegroup.add(this.head);

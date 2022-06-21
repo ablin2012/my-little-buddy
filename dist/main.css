@@ -9,9 +9,90 @@ ul {
     list-style: none;
     padding-left: 0;
 }
+
+*,*::before,*::after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 /*!*****************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss (1) ***!
   \*****************************************************************************************************************************************/
+#start-screen {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-image: url("../src/assets/images/start_screen_bg.jpeg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  z-index: 1;
+}
+
+#intro-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+#intro-text p {
+  width: 69%;
+  padding: 10px;
+}
+#intro-text h1 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+}
+
+#start-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+#start-screen label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#start-screen button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+img.pet-type {
+  width: 40%;
+  height: 40%;
+  border: 5px solid gray;
+  border-radius: 3px;
+}
+
+img.pet-type.selected {
+  width: 40%;
+  height: 40%;
+  border: 5px solid yellow;
+  border-radius: 3px;
+}
+
+#end-screen {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: red;
+  z-index: 1;
+}
+
 #world {
   position: fixed;
   top: 0;
@@ -35,12 +116,42 @@ ul {
   justify-content: center;
 }
 
-#my-links {
-  position: absolute;
+header {
+  position: fixed;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  z-index: 3;
+  font-family: "Rubik Mono One", sans-serif;
   display: flex;
-  justify-content: flex-end;
-  flex-direction: column;
-  bottom: 20%;
+  justify-content: space-between;
+  font-size: 12px;
+  background-color: brown;
+  color: white;
+  z-index: 2;
+  align-items: center;
+  display: none;
+}
+
+a {
+  display: block;
+}
+
+ul.header-list {
+  display: flex;
+  flex-direction: row;
+}
+
+ul.header-list > li {
+  border: 1px white solid;
+  font-size: smaller;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+}
+
+ul.header-list li:hover {
+  background-color: black;
 }
 
 #buddy-name {

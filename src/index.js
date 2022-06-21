@@ -32,7 +32,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
     foods = [],
     height = window.innerHeight,
     width = window.innerWidth,
-    feedBox;
+    selectedPet = null,
+    petType = null;
 
     // draggable vars
     let mouseX,
@@ -45,6 +46,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
     offset = {},
     selected = null;
 
+    // start screen
+    let startButton = document.getElementById('start-button')
+
     // DOM elements
     const canvas = document.querySelector('#world');
     const canvas2D = document.querySelector('#two-plain');
@@ -52,8 +56,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
     let hungerBar = document.getElementById('hunger-bar').firstElementChild;
     let happinessBar = document.getElementById('happiness-bar').firstElementChild;
     let buddyLevel = document.getElementById('level');
+    let buddyName = document.getElementById('buddy-name');
+    let customName = document.getElementById('custom-name');
+    let startScreen = document.getElementById('start-screen')
 
 
+    function startPageInit(){
+        startButton.addEventListener('click', startGame);
+        startScreen.addEventListener('click', pickPet);
+    }
 
     function init(){
         console.log(window.innerHeight);
@@ -86,6 +97,11 @@ document.addEventListener('DOMContentLoaded', function(event) {
         document.addEventListener("mousemove", handleMouseMove, false);
     }
 
+    function toggleScreen(id, toggle){
+        let screen = document.getElementById(id);
+        let display = (toggle) ? 'flex' : 'none';
+        screen.style.display = display;
+    }
     function createLights() {
         light = new THREE.HemisphereLight(0xffffff, 0xb3858c, .8);
     
@@ -204,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     function petBuddy(e) {
         if (mousePos.x > CONSTANTS.PIG_LEFT && mousePos.x < CONSTANTS.PIG_RIGHT && mousePos.y > CONSTANTS.PIG_BOT && mousePos.y < CONSTANTS.PIG_TOP && !selected) {
-            piggy.happyGain(0.1);
+            piggy.happyGain(0.3);
             updateProgressBars();
         }
     }
@@ -231,15 +247,43 @@ document.addEventListener('DOMContentLoaded', function(event) {
         selected = null;
         drawFoods();
     }
-    init();
-    createLights();
-    createFloor();
-    createPiggy();
-    updateProgressBars();
-    spawnFood();
-    drawFoods();
-    // createFoodBox();
-    updateBuddyInfo(piggy);
-    animate();
 
+    function pickPet(e){
+        if (e.target.className === 'pet-type') {
+            if (!selectedPet) {
+                selectedPet = e.target;
+                petType = selectedPet.dataset.pettype;
+                selectedPet.classList.add("selected");
+            } else {
+                selectedPet.classList.remove("selected");
+                selectedPet = e.target;
+                petType = selectedPet.dataset.pettype;
+            }
+        }
+    }
+    function startGame(){
+        if (customName.value && petType) {
+            startButton.removeEventListener('click', startGame);
+            startScreen.removeEventListener('click', pickPet);
+            buddyName.innerHTML = customName.value;
+            console.log('working');
+            toggleScreen('header', true);
+            toggleScreen('start-screen', false);
+            init();
+            createLights();
+            createFloor();
+            if (petType === 'pig') {
+                createPiggy();
+                updateBuddyInfo(piggy);
+            }
+            updateProgressBars();
+            spawnFood();
+            drawFoods();
+            animate();
+        } else {
+            alert('Fill in Required Fields');
+        }
+    }
+
+    startPageInit();
 });

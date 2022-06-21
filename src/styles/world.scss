@@ -3,27 +3,13 @@
     top: 0;
     left: 0;
     z-index: -1;
-    // width: 100%;
-    // height: 100%;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
 }
 
 #two-plain {
     position: fixed;
     top: 0;
     left: 0;
-    // width: 100%;
-    // height: 100%;
 }
-// #world {
-//     background: #81eefc;
-//     position: absolute;
-//     height: 100%;
-//     width: 100%;
-//     overflow: hidden;
-// }
 
 
 #instructions {
@@ -36,10 +22,40 @@
     justify-content: center;
 }
 
-#my-links {
-    position: absolute;
+header {
+    position: fixed;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    z-index: 3;
+    font-family: 'Rubik Mono One', sans-serif;
     display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-    bottom: 20%;
+    justify-content: space-between;
+    font-size: 12px;
+    background-color: brown;
+    color: white;
+    z-index: 2;
+    align-items: center;
+    display: none;
+}
+
+a {
+    display: block;
+}
+
+ul.header-list {
+    display: flex;
+    flex-direction: row;
+}
+
+ul.header-list > li {
+    border: 1px white solid;
+    font-size: smaller;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+}
+
+ul.header-list li:hover {
+    background-color: black;
 }

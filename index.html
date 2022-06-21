@@ -9,8 +9,36 @@
     <script src="./dist/main.js"></script>
     <title>My Little Buddy</title>
   </head>
-  
+  <header id="header" class="header">
+    <h1 class="header-logo">My Little Buddy</h1>
+    <nav class="header-nav">
+      <ul class="header-list">
+        <li>
+            <a class="personal-link" href="https://www.linkedin.com/in/adam-lin-2020/" target="blank">My LinkedIn</a>
+        </li>
+        <li>
+          <a class="personal-link" href="https://github.com/ablin2012" target="blank">My GitHub</a></button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
   <body>
+      <div id="start-screen" class="screen" style="display:block">
+        <div id="intro-text">
+            <h1>Welcome to My Little Buddy</h1>
+            <p>Meet your new best buddy, INSERT PET NAME HERE! Your best buddy loves hanging out with you, but he/she needs some good food and a bit of TLC to stay alive. Give your pet some pets to increase its happiness level and give it some food to maintain a healthy hunger level. Keep your pet alive and show that you are the best pet owner around!</p>
+        </div>
+        <label class="pet-info">Give Your Pet a Name:
+            <input type="text" name="" id="custom-name">
+        </label>
+        <label>Choose Your Pet:
+            <div id="pet-select">
+                <img src="./src/assets/images/pig_icon.png" class="pet-type" data-pettype="pig">
+            </div>
+        </label>
+        <button id="start-button">Start Game</button>
+      </div>
       <canvas id="world"></canvas>
       <canvas id="two-plain" width=1800 height=1800></canvas>
       <div id="instructions">Keep Your Buddy Alive</div>
@@ -25,10 +53,9 @@
       <div class="progress-bar" id="happiness-bar">
         <span style="width: 25%"></span>
       </div>
-      <div id="my-links">
-        <button><a class="personal-link" href="https://www.linkedin.com/in/adam-lin-2020/" target="blank">My LinkedIn</a></button>
-        <button><a class="personal-link" href="https://github.com/ablin2012" target="blank">My GitHub</a></button>
-      </div>
+      <div id="end-screen" class="screen" style="display:none">
+        <button id="end-button">Restart</button> 
+    </div>
   </body>
 
 </html>
