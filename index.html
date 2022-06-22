@@ -14,6 +14,9 @@
     <nav class="header-nav">
       <ul class="header-list">
         <li>
+            <div id="pause-button">| |</div>
+        </li>
+        <li>
             <a class="personal-link" href="https://www.linkedin.com/in/adam-lin-2020/" target="blank">My LinkedIn</a>
         </li>
         <li>
@@ -24,7 +27,7 @@
   </header>
 
   <body>
-      <div id="start-screen" class="screen" style="display:block">
+      <div id="start-screen" class="screen">
         <div id="intro-text">
             <h1>Welcome to My Little Buddy</h1>
             <p>Meet your new best buddy, INSERT PET NAME HERE! Your best buddy loves hanging out with you, but he/she needs some good food and a bit of TLC to stay alive. Give your pet some pets to increase its happiness level and give it some food to maintain a healthy hunger level. Keep your pet alive and show that you are the best pet owner around!</p>
@@ -49,7 +52,7 @@
       <div id="level">Lv. 01</div>
       <div id="buddy-name">Penny</div>
       <div id="music">
-        <audio id="bg-music" autoplay loop>
+        <audio id="bg-music" loop>
             <source src="./src/assets/background_music.mp3" type="audio/mpeg">
             Your browser does not support the HTML 5 audio tag.
           </audio>
@@ -57,18 +60,24 @@
             <source src="./src/assets/eating_sound.mp3" type="audio/mpeg">
             Your browser does not support the HTML 5 audio tag.
           </audio>
+          <audio id="end-screen-music" loop>
+            <source src="./src/assets/end_screen_music.mp3" type="audio/mpeg">
+            Your browser does not support the HTML 5 audio tag.
+          </audio>
       </div>
-      <div class="progress-bar" id="exp-bar">
-        <span style="width: 25%"></span>
-      </div>
-      <div class="progress-bar"  id="hunger-bar">
-        <span style="width: 25%"></span>
-      </div>
-      <div class="progress-bar" id="happiness-bar">
-        <span style="width: 25%"></span>
-      </div>
-      <div id="end-screen" class="screen" style="display:none">
-        <button id="end-button">Restart</button> 
+      <div class="progress-bar" id="exp-bar"><span></span></div>
+      <div class="progress-bar"  id="hunger-bar"><span></span></div>
+      <div class="progress-bar" id="happiness-bar"><span></span></div>
+      <div id="pause-screen" class="screen">
+          <h1>Paused</h1>
+        <div id="resume-button">
+            <button>Resume</button>
+        </div>
+    </div>
+      <div id="end-screen" class="screen">
+        <div id="restart-button">
+            <button>Restart</button>
+        </div>
     </div>
   </body>
 

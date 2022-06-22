@@ -19,6 +19,8 @@ ul {
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss (1) ***!
   \*****************************************************************************************************************************************/
 #start-screen {
+  display: flex;
+  justify-content: center;
   height: 100%;
   width: 100%;
   position: fixed;
@@ -34,13 +36,17 @@ ul {
 #intro-text {
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
-  flex-direction: row;
+  width: 75%;
+  /* center page with absolute position */
+  margin: 1em 0;
+  padding: 2em;
+  box-shadow: 2px 3px 20px black, 0 0 60px #8a4d0f inset;
+  background: #fffef0;
+  filter: url(#wavy2);
 }
 #intro-text p {
-  width: 69%;
-  padding: 10px;
+  width: 100%;
   font-family: "Nanum Pen Script", cursive;
   font-size: 20px;
 }
@@ -48,7 +54,7 @@ ul {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 20px;
+  padding: 10px;
   font-family: "Chewy", cursive;
   font-size: 32px;
 }
@@ -61,6 +67,7 @@ ul {
   width: 100%;
 }
 #start-screen label {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,15 +90,15 @@ ul {
 }
 
 img.pet-type {
-  width: 30%;
-  height: 30%;
+  width: 25%;
+  height: 25%;
   border: 5px solid gray;
   border-radius: 3px;
 }
 
 img.pet-type.selected {
-  width: 30%;
-  height: 30%;
+  width: 25%;
+  height: 25%;
   border: 5px solid yellow;
   border-radius: 3px;
 }
@@ -99,11 +106,42 @@ img.pet-type.selected {
 #end-screen {
   height: 100%;
   width: 100%;
+  background-image: url("../src/assets/images/end_screen_bg.webp");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: red;
   z-index: 1;
+  display: flex;
+}
+
+#pause-screen {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: gray;
+  opacity: 0.6;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: none;
+  flex-wrap: wrap;
+}
+#pause-screen h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-family: "Chewy", cursive;
+  font-size: 64px;
+}
+#pause-screen div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 #world {

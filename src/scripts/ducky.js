@@ -5,6 +5,7 @@ import { BuddyUtil } from "./buddy_util";
 export class Ducky extends Buddy {
     constructor(name) {
         super(name);
+        this.favoriteFood = 'sushi'
         this.threegroup = new THREE.Group();
 
         // Materials

@@ -48,8 +48,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
     offset = {},
     selected = null;
 
-    // start screen
-    let startButton = document.getElementById('start-button')
+    // time intervals
+    let drainInterval,
+    drawInterval;
+
+    // buttons
+    let startButton = document.getElementById('start-button');
+    let restartButton = document.getElementById('restart-button');
+    let pauseButton = document.getElementById('pause-button');
+    let resumeButton = document.getElementById('resume-button')
 
     // DOM elements
     const canvas = document.querySelector('#world');
@@ -63,9 +70,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
     let startScreen = document.getElementById('start-screen');
     let bgMusic = document.getElementById('bg-music');
     let eatingSound = document.getElementById('eating-sound');
+    let endScreenMusic = document.getElementById('end-screen-music');
 
 
     function startPageInit(){
+        restartButton.removeEventListener('click', startPageInit);
+        toggleScreen('end-screen', false);
+        toggleScreen('start-screen', true);
+        endScreenMusic.pause();
+        endScreenMusic.load();
         startButton.addEventListener('click', startGame);
         startScreen.addEventListener('click', pickPet);
     }
@@ -182,16 +195,35 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
 
     function updateBuddyInfo(buddy){
-        setInterval(() => {
+        drainInterval = setInterval(() => {
             buddy.hungerDrain();
             buddy.happyDrain();
             buddy.passiveExpGain();
             buddy.isBuddyDead();
             updateProgressBars();
         }, 200)
-        setInterval(() => {
+        drawInterval = setInterval(() => {
             drawFoods();
+            buddyIsDead();
         }, 2000)
+    }
+
+    function pause(){
+        clearInterval(drainInterval);
+        clearInterval(drawInterval);
+        bgMusic.pause();
+    }
+
+    function pauseGame(){
+        toggleScreen('pause-screen', true);
+        resumeButton.addEventListener('click', resumeGame);
+        pause();
+    }
+
+    function resumeGame(){
+        toggleScreen('pause-screen', false);
+        updateBuddyInfo(pet);
+        bgMusic.play();
     }
 
     function spawnFood(){
@@ -279,8 +311,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     function buddyIsDead(){
         if (pet.isBuddyDead()) {
+            pause();
             toggleScreen('end-screen', true);
+            restartButton.addEventListener('click', startPageInit);
             bgMusic.pause();
+            bgMusic.load();
+            endScreenMusic.play();
             toggleScreen('header', false)
         }
     }
@@ -291,12 +327,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
         yTarget = (mousePos.y - window.innerHeight/2);
         pet.look(xTarget, yTarget);
         requestAnimationFrame( animate );
-        buddyIsDead();
     }
 
     function startGame(){
         if (customName.value && petType) {
             bgMusic.play();
+            pauseButton.addEventListener('click', pauseGame);
             startButton.removeEventListener('click', startGame);
             startScreen.removeEventListener('click', pickPet);
             buddyName.innerHTML = customName.value;

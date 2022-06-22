@@ -6,6 +6,7 @@ import { BuddyUtil } from "./buddy_util";
 export class Piggy extends Buddy {
     constructor(name) {
         super(name);
+        this.favoriteFood = 'carrot'
         this.threegroup = new THREE.Group();
 
         // Materials
