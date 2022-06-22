@@ -29,19 +29,27 @@
             <h1>Welcome to My Little Buddy</h1>
             <p>Meet your new best buddy, INSERT PET NAME HERE! Your best buddy loves hanging out with you, but he/she needs some good food and a bit of TLC to stay alive. Give your pet some pets to increase its happiness level and give it some food to maintain a healthy hunger level. Keep your pet alive and show that you are the best pet owner around!</p>
         </div>
-        <label class="pet-info">Give Your Pet a Name:
+        <label class="pet-info">Give Your Pet a Name:  
             <input type="text" name="" id="custom-name">
         </label>
         <label>Choose Your Pet:
             <div id="pet-select">
                 <img src="./src/assets/images/pig_icon.png" class="pet-type" data-pettype="pig">
+                <img src="./src/assets/images/sloth_icon.png" class="pet-type" data-pettype="sloth">
             </div>
         </label>
-        <button id="start-button">Start Game</button>
+        <div id="start-button">
+            <button>Start Game</button>
+        </div>
       </div>
       <canvas id="world"></canvas>
       <canvas id="two-plain" width=1800 height=1800></canvas>
-      <div id="instructions">Keep Your Buddy Alive</div>
+      <div id="instructions">Keep Your Buddy Alive
+        <audio id="bg-music" autoplay loop>
+            <source src="./src/assets/background_music.mp3" type="audio/mpeg">
+            Your browser does not support the HTML 5 audio tag.
+          </audio>
+      </div>
       <div id="level">Lv. 01</div>
       <div id="buddy-name">Penny</div>
       <div class="progress-bar" id="exp-bar">

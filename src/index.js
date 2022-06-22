@@ -6,15 +6,16 @@ import { Milk } from './scripts/milk';
 import { Carrot } from './scripts/carrot';
 import { BuddyUtil } from './scripts/buddy_util';
 import { collisionUtils } from './scripts/collision_utils';
-import {Piggy} from './scripts/piggy';
+import { Piggy } from './scripts/piggy';
+import { Slothy } from './scripts/slothy';
 
 document.addEventListener('DOMContentLoaded', function(event) {
     const CONSTANTS = {
         NUM_FOODS: window.innerHeight/2 + 100,
-        PIG_TOP: window.innerWidth/2 - 100, 
-        PIG_BOT: window.innerHeight/2 - 100,
-        PIG_LEFT: window.innerWidth/2 - 100,
-        PIG_RIGHT: window.innerWidth/2 + 100,
+        HITBOX_TOP: window.innerWidth/2 - 100, 
+        HITBOX_BOT: window.innerHeight/2 - 100,
+        HITBOX_LEFT: window.innerWidth/2 - 100,
+        HITBOX_RIGHT: window.innerWidth/2 + 100,
     }
 
     let scene,
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     light,
     renderer,
     env,
-    piggy,
+    pet,
     mousePos = {x: 0, y: 0},
     xTarget,
     yTarget,
@@ -58,7 +59,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
     let buddyLevel = document.getElementById('level');
     let buddyName = document.getElementById('buddy-name');
     let customName = document.getElementById('custom-name');
-    let startScreen = document.getElementById('start-screen')
+    let startScreen = document.getElementById('start-screen');
+    let bgMusic = document.getElementById('bg-music')
 
 
     function startPageInit(){
@@ -124,7 +126,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
         env = new THREE.Group();
     
         floor = new THREE.Mesh(new THREE.PlaneBufferGeometry(2000, 2000), new THREE.MeshBasicMaterial({
-        color: 0x28871e
+        // color: 0x28871e
+        color: 0x81eefc
         }));
         floor.rotation.x = -Math.PI / 2;
         floor.position.y = -36;
@@ -141,14 +144,20 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
 
     // Refactor for other buddy types
-    function createPiggy() {
-        piggy = new Piggy('oinkers');
-        scene.add(piggy.threegroup);
+    function createPet() {
+        if (petType === 'pig') {
+            pet = new Piggy('oinkers');
+            scene.add(pet.threegroup);
+        } else if (petType === 'sloth') {
+            pet = new Slothy('sid');
+            scene.add(pet.threegroup);
+        }
     }
     
     function handleMouseMove(event) {
         mousePos = {x:event.clientX, y:event.clientY};
     }
+
     function render(){
         renderer.render(scene, camera);
     }
@@ -157,15 +166,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
         render();
         xTarget = (mousePos.x - window.innerWidth/2);
         yTarget = (mousePos.y - window.innerHeight/2);
-        piggy.look(xTarget, yTarget);
+        pet.look(xTarget, yTarget);
         requestAnimationFrame( animate );
     }
     
     function updateProgressBars(){
-        hungerBar.style.width = `${piggy.hungerLevel}%` ;
-        happinessBar.style.width = `${piggy.happyLevel}%`;
-        expBar.style.width = `${piggy.exp}%`;
-        buddyLevel.innerHTML = `Lv. ${piggy.level}`;
+        hungerBar.style.width = `${pet.hungerLevel}%` ;
+        happinessBar.style.width = `${pet.happyLevel}%`;
+        expBar.style.width = `${pet.exp}%`;
+        buddyLevel.innerHTML = `Lv. ${pet.level}`;
     }
 
     function updateBuddyInfo(buddy){
@@ -219,8 +228,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
 
     function petBuddy(e) {
-        if (mousePos.x > CONSTANTS.PIG_LEFT && mousePos.x < CONSTANTS.PIG_RIGHT && mousePos.y > CONSTANTS.PIG_BOT && mousePos.y < CONSTANTS.PIG_TOP && !selected) {
-            piggy.happyGain(0.3);
+        if (mousePos.x > CONSTANTS.HITBOX_LEFT && mousePos.x < CONSTANTS.HITBOX_RIGHT && mousePos.y > CONSTANTS.HITBOX_BOT && mousePos.y < CONSTANTS.HITBOX_TOP && !selected) {
+            pet.happyGain(0.3);
             updateProgressBars();
         }
     }
@@ -238,9 +247,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
     function onMouseUp(e){
         document.body.removeEventListener("mousemove", onMouseMove);
         document.body.removeEventListener("mouseup", onMouseUp);
-        if (selected.x > CONSTANTS.PIG_LEFT && selected.x < CONSTANTS.PIG_RIGHT && selected.y > CONSTANTS.PIG_BOT && selected.y < CONSTANTS.PIG_TOP) {
+        if (selected.x > CONSTANTS.HITBOX_LEFT && selected.x < CONSTANTS.HITBOX_RIGHT && selected.y > CONSTANTS.HITBOX_BOT && selected.y < CONSTANTS.HITBOX_TOP) {
             console.log('yo eat that shit');
-            piggy.hungerGain(selected.nutritionValue);
+            pet.hungerGain(selected.nutritionValue);
             updateProgressBars();
             spawnFood();
         }
@@ -258,11 +267,13 @@ document.addEventListener('DOMContentLoaded', function(event) {
                 selectedPet.classList.remove("selected");
                 selectedPet = e.target;
                 petType = selectedPet.dataset.pettype;
+                selectedPet.classList.add("selected");
             }
         }
     }
     function startGame(){
         if (customName.value && petType) {
+            bgMusic.play();
             startButton.removeEventListener('click', startGame);
             startScreen.removeEventListener('click', pickPet);
             buddyName.innerHTML = customName.value;
@@ -272,10 +283,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
             init();
             createLights();
             createFloor();
-            if (petType === 'pig') {
-                createPiggy();
-                updateBuddyInfo(piggy);
-            }
+            createPet();
+            updateBuddyInfo(pet);
             updateProgressBars();
             spawnFood();
             drawFoods();

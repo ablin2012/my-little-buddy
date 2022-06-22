@@ -1,7 +1,7 @@
 /*!*************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
   \*************************************************************************************************************************************/
-@import url(https://fonts.googleapis.com/css2?family=Play&family=Rubik+Mono+One&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Chewy&family=Nanum+Pen+Script&family=Play&family=Rubik+Mono+One&display=swap);
 /*!****************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styles/reset.css ***!
   \****************************************************************************************************/
@@ -41,12 +41,16 @@ ul {
 #intro-text p {
   width: 69%;
   padding: 10px;
+  font-family: "Nanum Pen Script", cursive;
+  font-size: 20px;
 }
 #intro-text h1 {
   display: flex;
   justify-content: center;
   width: 100%;
   padding: 20px;
+  font-family: "Chewy", cursive;
+  font-size: 32px;
 }
 
 #start-screen {
@@ -61,24 +65,33 @@ ul {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  flex-direction: row;
+  font-family: "Chewy", cursive;
+  font-size: 20px;
 }
-#start-screen button {
+
+#pet-select {
   display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+#start-button {
+  display: flex;
+  width: 100%;
   justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
 }
 
 img.pet-type {
-  width: 40%;
-  height: 40%;
+  width: 30%;
+  height: 30%;
   border: 5px solid gray;
   border-radius: 3px;
 }
 
 img.pet-type.selected {
-  width: 40%;
-  height: 40%;
+  width: 30%;
+  height: 30%;
   border: 5px solid yellow;
   border-radius: 3px;
 }
@@ -108,8 +121,8 @@ img.pet-type.selected {
 
 #instructions {
   position: absolute;
-  font-family: "Rubik Mono One", sans-serif;
-  font-size: 12px;
+  font-family: "Nanum Pen Script", cursive;
+  font-size: 18px;
   width: 100%;
   display: flex;
   bottom: 6%;
@@ -122,11 +135,11 @@ header {
   padding-left: 20px;
   padding-right: 20px;
   z-index: 3;
-  font-family: "Rubik Mono One", sans-serif;
+  font-family: "Chewy", cursive;
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
-  background-color: brown;
+  font-size: 16px;
+  background-color: #ff944d;
   color: white;
   z-index: 2;
   align-items: center;
@@ -151,17 +164,17 @@ ul.header-list > li {
 }
 
 ul.header-list li:hover {
-  background-color: black;
+  background-color: #fca76f;
 }
 
 #buddy-name {
-  font-family: "Rubik Mono One", sans-serif;
+  font-family: "Chewy", cursive;
   position: absolute;
   display: flex;
   justify-content: center;
   width: 100%;
-  top: 10%;
-  font-size: 20px;
+  top: 8%;
+  font-size: 24px;
 }
 
 #level {

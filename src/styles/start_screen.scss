@@ -19,12 +19,16 @@
     p {
         width: 69%;
         padding: 10px;
+        font-family: 'Nanum Pen Script', cursive;
+        font-size: 20px;
     }
     h1 {
         display: flex;
         justify-content: center;
         width: 100%;
         padding: 20px;
+        font-family: 'Chewy', cursive;
+        font-size: 32px;
     }
 }
 
@@ -39,25 +43,34 @@
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
-    }
-    button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
+        flex-direction: row;
+        font-family: 'Chewy', cursive;
+        font-size: 20px;
     }
 }
 
+#pet-select {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+#start-button {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
 img.pet-type {
-    width: 40%;
-    height: 40%;
+    width: 30%;
+    height: 30%;
     border: 5px solid gray;
     border-radius: 3px;
 }
 
 img.pet-type.selected {
-    width: 40%;
-    height: 40%;
+    width: 30%;
+    height: 30%;
     border: 5px solid yellow;
     border-radius: 3px;
 }
@@ -72,4 +85,3 @@ img.pet-type.selected {
     background-color: red;
     z-index: 1;
 }
-
