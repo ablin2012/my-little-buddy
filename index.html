@@ -36,6 +36,7 @@
             <div id="pet-select">
                 <img src="./src/assets/images/pig_icon.png" class="pet-type" data-pettype="pig">
                 <img src="./src/assets/images/sloth_icon.png" class="pet-type" data-pettype="sloth">
+                <img src="./src/assets/images/duck_icon.png" class="pet-type" data-pettype="duck">
             </div>
         </label>
         <div id="start-button">
@@ -44,14 +45,19 @@
       </div>
       <canvas id="world"></canvas>
       <canvas id="two-plain" width=1800 height=1800></canvas>
-      <div id="instructions">Keep Your Buddy Alive
+      <div id="instructions">Keep Your Buddy Alive</div>
+      <div id="level">Lv. 01</div>
+      <div id="buddy-name">Penny</div>
+      <div id="music">
         <audio id="bg-music" autoplay loop>
             <source src="./src/assets/background_music.mp3" type="audio/mpeg">
             Your browser does not support the HTML 5 audio tag.
           </audio>
+          <audio id="eating-sound">
+            <source src="./src/assets/eating_sound.mp3" type="audio/mpeg">
+            Your browser does not support the HTML 5 audio tag.
+          </audio>
       </div>
-      <div id="level">Lv. 01</div>
-      <div id="buddy-name">Penny</div>
       <div class="progress-bar" id="exp-bar">
         <span style="width: 25%"></span>
       </div>

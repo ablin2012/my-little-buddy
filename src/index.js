@@ -8,11 +8,12 @@ import { BuddyUtil } from './scripts/buddy_util';
 import { collisionUtils } from './scripts/collision_utils';
 import { Piggy } from './scripts/piggy';
 import { Slothy } from './scripts/slothy';
+import { Ducky } from './scripts/ducky';
 
 document.addEventListener('DOMContentLoaded', function(event) {
     const CONSTANTS = {
         NUM_FOODS: window.innerHeight/2 + 100,
-        HITBOX_TOP: window.innerWidth/2 - 100, 
+        HITBOX_TOP: window.innerWidth/2 + 100, 
         HITBOX_BOT: window.innerHeight/2 - 100,
         HITBOX_LEFT: window.innerWidth/2 - 100,
         HITBOX_RIGHT: window.innerWidth/2 + 100,
@@ -60,7 +61,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
     let buddyName = document.getElementById('buddy-name');
     let customName = document.getElementById('custom-name');
     let startScreen = document.getElementById('start-screen');
-    let bgMusic = document.getElementById('bg-music')
+    let bgMusic = document.getElementById('bg-music');
+    let eatingSound = document.getElementById('eating-sound');
 
 
     function startPageInit(){
@@ -104,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         let display = (toggle) ? 'flex' : 'none';
         screen.style.display = display;
     }
+
     function createLights() {
         light = new THREE.HemisphereLight(0xffffff, 0xb3858c, .8);
     
@@ -126,8 +129,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
         env = new THREE.Group();
     
         floor = new THREE.Mesh(new THREE.PlaneBufferGeometry(2000, 2000), new THREE.MeshBasicMaterial({
-        // color: 0x28871e
-        color: 0x81eefc
+        color: 0x28871e
+        // color: 0x81eefc
         }));
         floor.rotation.x = -Math.PI / 2;
         floor.position.y = -36;
@@ -141,6 +144,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
         renderer.setSize(window.innerWidth, window.innerHeight);
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
+        CONSTANTS.HITBOX_TOP = window.innerWidth/2 + 100, 
+        CONSTANTS.HITBOX_BOT = window.innerHeight/2 - 100,
+        CONSTANTS.HITBOX_LEFT = window.innerWidth/2 - 100,
+        CONSTANTS.HITBOX_RIGHT = window.innerWidth/2 + 100,
+        spawnFood();
+        drawFoods();
     }
 
     // Refactor for other buddy types
@@ -151,6 +160,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
         } else if (petType === 'sloth') {
             pet = new Slothy('sid');
             scene.add(pet.threegroup);
+        } else if (petType === 'duck') {
+            pet = new Ducky('quack');
+            scene.add(pet.threegroup);
         }
     }
     
@@ -160,14 +172,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     function render(){
         renderer.render(scene, camera);
-    }
-
-    function animate(){
-        render();
-        xTarget = (mousePos.x - window.innerWidth/2);
-        yTarget = (mousePos.y - window.innerHeight/2);
-        pet.look(xTarget, yTarget);
-        requestAnimationFrame( animate );
     }
     
     function updateProgressBars(){
@@ -249,6 +253,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         document.body.removeEventListener("mouseup", onMouseUp);
         if (selected.x > CONSTANTS.HITBOX_LEFT && selected.x < CONSTANTS.HITBOX_RIGHT && selected.y > CONSTANTS.HITBOX_BOT && selected.y < CONSTANTS.HITBOX_TOP) {
             console.log('yo eat that shit');
+            eatingSound.play();
             pet.hungerGain(selected.nutritionValue);
             updateProgressBars();
             spawnFood();
@@ -271,6 +276,24 @@ document.addEventListener('DOMContentLoaded', function(event) {
             }
         }
     }
+
+    function buddyIsDead(){
+        if (pet.isBuddyDead()) {
+            toggleScreen('end-screen', true);
+            bgMusic.pause();
+            toggleScreen('header', false)
+        }
+    }
+
+    function animate(){
+        render();
+        xTarget = (mousePos.x - window.innerWidth/2);
+        yTarget = (mousePos.y - window.innerHeight/2);
+        pet.look(xTarget, yTarget);
+        requestAnimationFrame( animate );
+        buddyIsDead();
+    }
+
     function startGame(){
         if (customName.value && petType) {
             bgMusic.play();

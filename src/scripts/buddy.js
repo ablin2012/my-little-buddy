@@ -72,7 +72,6 @@ export class Buddy {
     // death logic
     isBuddyDead(){
         if (this.happyLevel === 0 || this.hungerLevel === 0) {
-            alert("pig is dead");
             return true;
         } else {
             return false;
