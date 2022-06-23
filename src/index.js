@@ -372,6 +372,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         yTarget = (mousePos.y - window.innerHeight/2);
         pet.look(xTarget, yTarget);
         requestAnimationFrame( animate );
+        drawFoods();
     }
 
     function startGame(){

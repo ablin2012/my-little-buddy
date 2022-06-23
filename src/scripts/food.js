@@ -14,8 +14,6 @@ export class Food {
     draw(context){
         let base_image = new Image();
         base_image.src = this.img;
-        base_image.onload = function(){
-            context.drawImage(base_image, this.x, this.y, this.width, this.height);
-        }.bind(this);
+        context.drawImage(base_image, this.x, this.y, this.width, this.height);
     }
 }
