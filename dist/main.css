@@ -306,6 +306,7 @@ ul.header-list li:hover {
 }
 
 #exp-bar {
+  font-family: "Play", sans-serif;
   position: absolute;
   display: flex;
   margin-left: 35%;
@@ -314,6 +315,8 @@ ul.header-list li:hover {
 }
 
 #hunger-bar {
+  font-family: "Play", sans-serif;
+  font-size: 10px;
   position: absolute;
   display: flex;
   margin-left: 35%;
@@ -323,6 +326,8 @@ ul.header-list li:hover {
 }
 
 #happiness-bar {
+  font-family: "Play", sans-serif;
+  font-size: 10px;
   position: absolute;
   display: flex;
   margin-left: 35%;

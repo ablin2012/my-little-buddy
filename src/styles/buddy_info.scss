@@ -19,6 +19,7 @@
 }
 
 #exp-bar {
+    font-family: 'Play', sans-serif;
     position: absolute;
     display: flex;
     margin-left: 35%;
@@ -27,6 +28,8 @@
 }
 
 #hunger-bar {
+    font-family: 'Play', sans-serif;
+    font-size: 10px;
     position: absolute;
     display: flex;
     margin-left: 35%;
@@ -36,6 +39,8 @@
 }
 
 #happiness-bar {
+    font-family: 'Play', sans-serif;
+    font-size: 10px;
     position: absolute;
     display: flex;
     margin-left: 35%;

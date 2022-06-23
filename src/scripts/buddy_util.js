@@ -20,5 +20,14 @@ export const BuddyUtil = {
         let dt = tmax-tmin;
         let tv = tmin + (pc*dt);
         return tv; 
-    }
+    },
+
+    pointInRect: function(x, y, rect) {
+		return BuddyUtil.inRange(x, rect.x, rect.x + rect.width) &&
+		       BuddyUtil.inRange(y, rect.y, rect.y + rect.height);
+	},
+
+	inRange: function(value, min, max) {
+		return value >= Math.min(min, max) && value <= Math.max(min, max);
+	}
 }

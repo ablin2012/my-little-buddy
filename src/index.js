@@ -5,7 +5,6 @@ import { Pizza } from './scripts/pizza';
 import { Milk } from './scripts/milk';
 import { Carrot } from './scripts/carrot';
 import { BuddyUtil } from './scripts/buddy_util';
-import { collisionUtils } from './scripts/collision_utils';
 import { Piggy } from './scripts/piggy';
 import { Slothy } from './scripts/slothy';
 import { Ducky } from './scripts/ducky';
@@ -292,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     function handleMouseDown(e){
         for(let i = 0; i < foods.length; i++) {
-            if (collisionUtils.pointInRect(e.clientX, e.clientY, foods[i])) {
+            if (BuddyUtil.pointInRect(e.clientX, e.clientY, foods[i])) {
                 selected = foods[i];
                 document.body.addEventListener("mousemove", onMouseMove);
                 document.body.addEventListener("mouseup", onMouseUp);
