@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
             buddy.passiveExpGain();
             buddy.isBuddyDead();
             updateProgressBars();
-        }, 40)
+        }, 200)
         drawInterval = setInterval(() => {
             drawFoods();
             buddyIsDead();
