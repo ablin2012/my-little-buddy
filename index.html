@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
     <link rel="stylesheet" href="./dist/main.css" />
     <script src="./dist/main.js"></script>
     <title>My Little Buddy</title>
@@ -14,7 +15,10 @@
     <nav class="header-nav">
       <ul class="header-list">
         <li>
-            <div id="pause-button">| |</div>
+            <i id="mute-button" class="fas fa-volume-up"></i>
+        </li>
+        <li>
+            <i id="pause-button" class="fas fa-pause"></i>
         </li>
         <li>
             <a class="personal-link" href="https://www.linkedin.com/in/adam-lin-2020/" target="blank">My LinkedIn</a>
@@ -49,8 +53,8 @@
       <canvas id="world"></canvas>
       <canvas id="two-plain" width=1800 height=1800></canvas>
       <div id="instructions">Keep Your Buddy Alive</div>
-      <div id="level">Lv. 01</div>
-      <div id="buddy-name">Penny</div>
+      <div id="level"></div>
+      <div id="buddy-name"></div>
       <div id="music">
         <audio id="bg-music" loop>
             <source src="./src/assets/background_music.mp3" type="audio/mpeg">
@@ -68,13 +72,15 @@
       <div class="progress-bar" id="exp-bar"><span></span></div>
       <div class="progress-bar"  id="hunger-bar"><span></span></div>
       <div class="progress-bar" id="happiness-bar"><span></span></div>
-      <div id="pause-screen" class="screen">
-          <h1>Paused</h1>
-        <div id="resume-button">
-            <button>Resume</button>
-        </div>
-    </div>
+      <div id="pause-screen" class="screen"><h1>Paused</h1></div>
       <div id="end-screen" class="screen">
+        <div id="end-text">
+            <h1>So Your Little Buddy Died...</h1>
+            <p>That's ok! You did your best and you gave your pet plenty of love. I'm sure it had a great life. Don't you stay down for too long. There's another pet out there waiting for you to love it!</p>
+        </div>
+        <div id="rip-name"></div>
+        <div id="final-score"></div>
+        <div id="final-level"></div>
         <div id="restart-button">
             <button>Restart</button>
         </div>

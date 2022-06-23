@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
     height = window.innerHeight,
     width = window.innerWidth,
     selectedPet = null,
-    petType = null;
+    petType = null,
+    score = 0;
 
     // draggable vars
     let mouseX,
@@ -50,13 +51,14 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     // time intervals
     let drainInterval,
-    drawInterval;
+    drawInterval,
+    scoreInterval;
 
     // buttons
     let startButton = document.getElementById('start-button');
     let restartButton = document.getElementById('restart-button');
     let pauseButton = document.getElementById('pause-button');
-    let resumeButton = document.getElementById('resume-button')
+    let muteButton = document.getElementById('mute-button');
 
     // DOM elements
     const canvas = document.querySelector('#world');
@@ -68,13 +70,20 @@ document.addEventListener('DOMContentLoaded', function(event) {
     let buddyName = document.getElementById('buddy-name');
     let customName = document.getElementById('custom-name');
     let startScreen = document.getElementById('start-screen');
+    let ripName = document.getElementById('rip-name');
+    let finalLevel = document.getElementById('final-level');
+    let finalScore = document.getElementById('final-score');
+
+    // sounds
     let bgMusic = document.getElementById('bg-music');
     let eatingSound = document.getElementById('eating-sound');
     let endScreenMusic = document.getElementById('end-screen-music');
 
 
     function startPageInit(){
+        score = 0;
         restartButton.removeEventListener('click', startPageInit);
+        muteButton.addEventListener('click', muteSound);
         toggleScreen('end-screen', false);
         toggleScreen('start-screen', true);
         endScreenMusic.pause();
@@ -142,8 +151,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
         env = new THREE.Group();
     
         floor = new THREE.Mesh(new THREE.PlaneBufferGeometry(2000, 2000), new THREE.MeshBasicMaterial({
-        color: 0x28871e
-        // color: 0x81eefc
+        // color: 0x28871e
+        color: 0x81eefc
         }));
         floor.rotation.x = -Math.PI / 2;
         floor.position.y = -36;
@@ -191,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
         hungerBar.style.width = `${pet.hungerLevel}%` ;
         happinessBar.style.width = `${pet.happyLevel}%`;
         expBar.style.width = `${pet.exp}%`;
-        buddyLevel.innerHTML = `Lv. ${pet.level}`;
+        buddyLevel.innerHTML = `Lv. ${pet.level} | Score: ${Math.floor(score)}`;
     }
 
     function updateBuddyInfo(buddy){
@@ -206,24 +215,56 @@ document.addEventListener('DOMContentLoaded', function(event) {
             drawFoods();
             buddyIsDead();
         }, 2000)
+        scoreInterval = setInterval(() => {
+            score += 1;
+        }, 1000)
     }
 
     function pause(){
         clearInterval(drainInterval);
         clearInterval(drawInterval);
+        clearInterval(scoreInterval);
         bgMusic.pause();
     }
 
     function pauseGame(){
         toggleScreen('pause-screen', true);
-        resumeButton.addEventListener('click', resumeGame);
+        pauseButton.addEventListener('click', resumeGame);
+        pauseButton.removeEventListener('click', pauseGame);
+        pauseButton.classList.add('fa-play');
+        pauseButton.classList.remove('fa-pause');
         pause();
     }
 
     function resumeGame(){
         toggleScreen('pause-screen', false);
+        pauseButton.removeEventListener('click', resumeGame);
+        pauseButton.addEventListener('click', pauseGame);
+        pauseButton.classList.remove('fa-play');
+        pauseButton.classList.add('fa-pause');
         updateBuddyInfo(pet);
         bgMusic.play();
+    }
+
+    function muteSound(){
+        bgMusic.muted = true;
+        eatingSound.muted = true;
+        endScreenMusic.muted = true;
+        muteButton.removeEventListener('click', muteSound);
+        muteButton.addEventListener('click', unmuteSound);
+        muteButton.classList.remove('fa-volume-up');
+        muteButton.classList.add('fa-volume-off');
+    }
+
+
+    function unmuteSound(){
+        bgMusic.muted = false;
+        eatingSound.muted = false;
+        endScreenMusic.muted = false;
+        muteButton.addEventListener('click', muteSound);
+        muteButton.removeEventListener('click', unmuteSound);
+        muteButton.classList.remove('fa-volume-off');
+        muteButton.classList.add('fa-volume-up');
     }
 
     function spawnFood(){
@@ -266,6 +307,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     function petBuddy(e) {
         if (mousePos.x > CONSTANTS.HITBOX_LEFT && mousePos.x < CONSTANTS.HITBOX_RIGHT && mousePos.y > CONSTANTS.HITBOX_BOT && mousePos.y < CONSTANTS.HITBOX_TOP && !selected) {
             pet.happyGain(0.3);
+            score += 0.1
             updateProgressBars();
         }
     }
@@ -284,9 +326,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
         document.body.removeEventListener("mousemove", onMouseMove);
         document.body.removeEventListener("mouseup", onMouseUp);
         if (selected.x > CONSTANTS.HITBOX_LEFT && selected.x < CONSTANTS.HITBOX_RIGHT && selected.y > CONSTANTS.HITBOX_BOT && selected.y < CONSTANTS.HITBOX_TOP) {
-            console.log('yo eat that shit');
             eatingSound.play();
             pet.hungerGain(selected.nutritionValue);
+            score += selected.nutritionValue;
             updateProgressBars();
             spawnFood();
         }
@@ -317,7 +359,10 @@ document.addEventListener('DOMContentLoaded', function(event) {
             bgMusic.pause();
             bgMusic.load();
             endScreenMusic.play();
-            toggleScreen('header', false)
+            toggleScreen('header', false);
+            finalLevel.innerHTML = `Level: ${pet.level}`;
+            finalScore.innerHTML = `Score: ${Math.floor(score)}`;
+            ripName.innerHTML = `${pet.name}`;
         }
     }
 
@@ -335,7 +380,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
             pauseButton.addEventListener('click', pauseGame);
             startButton.removeEventListener('click', startGame);
             startScreen.removeEventListener('click', pickPet);
-            buddyName.innerHTML = customName.value;
             console.log('working');
             toggleScreen('header', true);
             toggleScreen('start-screen', false);
@@ -343,6 +387,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
             createLights();
             createFloor();
             createPet();
+            pet.name = customName.value;
+            buddyName.innerHTML = customName.value;
             updateBuddyInfo(pet);
             updateProgressBars();
             spawnFood();

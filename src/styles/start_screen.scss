@@ -86,7 +86,7 @@ img.pet-type.selected {
 #end-screen{
     height: 100%;
     width: 100%;
-    background-image: url('../src/assets/images/end_screen_bg.webp');
+    background-image: url('../src/assets/images/end_screen_bg.jpeg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
@@ -96,6 +96,53 @@ img.pet-type.selected {
     z-index: 1;
     display: flex;
 }
+
+#end-screen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    label {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: row;
+        font-family: 'Chewy', cursive;
+        font-size: 20px;
+    }
+}
+
+#end-text{
+    display: flex;
+    position: fixed;
+    top: 15%;
+    justify-content: center;
+    flex-wrap: wrap;
+        width: 75%;
+    /* center page with absolute position */
+    margin: 1em 0;
+        padding: 2em;
+        box-shadow: 2px 3px 20px black, 0 0 60px #8a4d0f inset;
+        background: #fffef0;
+    filter: url(#wavy2);
+    p {
+        width: 100%;
+        font-family: 'Nanum Pen Script', cursive;
+        font-size: 20px;
+    }
+    h1 {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 10px;
+        font-family: 'Chewy', cursive;
+        font-size: 32px;
+    }
+}
+
 
 #pause-screen {
     height: 100%;
@@ -123,3 +170,34 @@ img.pet-type.selected {
         width: 100%;
     }
 }
+
+#rip-name {
+    position: relative;
+    top: 40%;
+    font-family: 'Chewy', cursive;
+    font-size: 48px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#final-score {
+    position: relative;
+    top: 40%;
+    font-family: 'Chewy', cursive;
+    font-size: 26px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#final-level {
+    position: relative;
+    top: 10%;
+    font-family: 'Chewy', cursive;
+    font-size: 26px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
