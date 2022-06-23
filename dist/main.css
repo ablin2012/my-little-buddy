@@ -308,6 +308,7 @@ ul.header-list li:hover {
 #exp-bar {
   font-family: "Play", sans-serif;
   position: absolute;
+  color: black;
   display: flex;
   margin-left: 35%;
   width: 30%;
@@ -318,6 +319,7 @@ ul.header-list li:hover {
   font-family: "Play", sans-serif;
   font-size: 10px;
   position: absolute;
+  color: black;
   display: flex;
   margin-left: 35%;
   width: 24%;
@@ -328,6 +330,7 @@ ul.header-list li:hover {
 #happiness-bar {
   font-family: "Play", sans-serif;
   font-size: 10px;
+  color: black;
   position: absolute;
   display: flex;
   margin-left: 35%;

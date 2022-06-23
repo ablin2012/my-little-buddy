@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
             buddy.passiveExpGain();
             buddy.isBuddyDead();
             updateProgressBars();
-        }, 200)
+        }, 40)
         drawInterval = setInterval(() => {
             drawFoods();
             buddyIsDead();
@@ -361,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
             toggleScreen('header', false);
             finalLevel.innerHTML = `Level: ${pet.level}`;
             finalScore.innerHTML = `Score: ${Math.floor(score)}`;
-            ripName.innerHTML = `${pet.name}`;
+            ripName.innerHTML = `${pet.name} the ${petType}`;
         }
     }
 
