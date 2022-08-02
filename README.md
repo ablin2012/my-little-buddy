@@ -1,5 +1,5 @@
-# JavaScript Project: My Little Buddy
-[Crrent Version](https://ablin2012.github.io/my-little-buddy/)
+# My Little Buddy
+[Current Version](https://ablin2012.github.io/my-little-buddy/)
 
 ### Background
 Meet your new best buddy, INSERT PET NAME HERE! Your best buddy loves hanging out with you, but he/she needs some good food and a bit of TLC to stay alive. Give your pet some pets to increase its happiness level and give it some food to maintain a healthy hunger level. You can play mini-games with your pet to earn exp and currency to buy new toys and upgrades for your pet. Level up your pet and take on bosses. Defeat the final boss to make your pet live forever.
