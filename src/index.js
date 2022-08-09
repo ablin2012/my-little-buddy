@@ -92,8 +92,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
 
     function init(){
-        console.log(window.innerHeight);
-        console.log(window.innerWidth);
         const backgroundColor = 0x81eefc;
 
         // create scene
@@ -380,7 +378,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
             pauseButton.addEventListener('click', pauseGame);
             startButton.removeEventListener('click', startGame);
             startScreen.removeEventListener('click', pickPet);
-            console.log('working');
             toggleScreen('header', true);
             toggleScreen('start-screen', false);
             init();
