@@ -89,6 +89,20 @@ ul {
   justify-content: center;
 }
 
+.start-button {
+  width: 200px;
+  height: 40px;
+  background-color: #65acef;
+  border: none;
+  border-radius: 10px;
+  font-family: "Chewy", cursive;
+  font-size: 20px;
+}
+
+.start-button:hover {
+  background-color: #94c3ef;
+}
+
 img.pet-type {
   width: 25%;
   height: 25%;

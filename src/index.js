@@ -12,10 +12,10 @@ import { Ducky } from './scripts/ducky';
 document.addEventListener('DOMContentLoaded', function(event) {
     const CONSTANTS = {
         NUM_FOODS: window.innerHeight/2 + 100,
-        HITBOX_TOP: window.innerWidth/2 + 100, 
-        HITBOX_BOT: window.innerHeight/2 - 100,
-        HITBOX_LEFT: window.innerWidth/2 - 100,
-        HITBOX_RIGHT: window.innerWidth/2 + 100,
+        HITBOX_TOP: window.innerHeight/2 + 100, 
+        HITBOX_BOT: window.innerHeight/2 - 150,
+        HITBOX_LEFT: window.innerWidth/2 - 190,
+        HITBOX_RIGHT: window.innerWidth/2 + 70,
     }
 
     let scene,
